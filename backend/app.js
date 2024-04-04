@@ -1,13 +1,16 @@
-const express = require('express');
+const express = require('express'); // Import du module Express.js
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose');  // Import du module Mongoose pour la connexion à MongoDB
 
 // const Thing = require('./models/thing');
+
+// Import des routes définies dans les autres fichiers
 const stuffRoutes = require('./routes/stuff');
 const userRoutes = require('./routes/user');
 
-const app = express();
+const app = express();   // Création d'une application Express
 
+// Connexion à la base de données MongoDB
 mongoose.connect('mongodb+srv://julie:zrHaJAiVUtKGhnuO@cluster0.80ftkv3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0',
   {
     useNewUrlParser: true,
@@ -16,9 +19,10 @@ mongoose.connect('mongodb+srv://julie:zrHaJAiVUtKGhnuO@cluster0.80ftkv3.mongodb.
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée...'));
 
-app.use(express.json());
+app.use(express.json());  // Utilise le middleware express.json() pour parser les corps des requêtes HTTP entrantes en JSON => permet de récupérer les données envoyées dans le corps des requêtes POST, PUT, PATCH, etc
 
-app.use('/api/stuff', stuffRoutes);
+// Définition des ROUTES pour les ressources "stuff" et "auth"
+app.use('/api/stuff', stuffRoutes); 
 app.use('/api/auth', userRoutes);
 
 // app.use((req, res, next) => {
@@ -63,4 +67,4 @@ app.use('/api/auth', userRoutes);
 //     .catch(error => res.status(400).json({ error }));
 // });
 
-module.exports = app;
+module.exports = app;  // Exportation de l'application Express pour pouvoir l'utiliser dans d'autres fichiers
